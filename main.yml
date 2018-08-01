@@ -30,6 +30,10 @@
     - include_tasks: tasks/terminal.yml
       when: configure_terminal
 
+    - include_tasks: tasks/iterm2.yml
+      when: configure_iterm2
+      tags: ['iterm2']
+
     - include_tasks: tasks/osx.yml
       when: configure_osx
       tags: ['osx']

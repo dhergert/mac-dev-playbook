@@ -1,0 +1,7 @@
+---
+# Sudoers configuration (enables more convenient Vagrant usage).
+- name: Copy iterm2 profile configuration into place.
+  template:
+    src: templates/iterm2.j2
+    dest: ~/Library/Application Support/iTerm2/DynamicProfiles/profiles.json
+    mode: 0644

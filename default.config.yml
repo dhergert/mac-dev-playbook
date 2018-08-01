@@ -4,12 +4,13 @@ downloads: ~/.ansible-downloads/
 configure_dotfiles: no
 configure_sudoers: no
 configure_terminal: no
+configure_iterm: no
 configure_osx: no
 configure_extra_packages: no
 configure_jenv: no
 configure_eclipse: no
 configure_apachedirectorystudio: no
-configure_intellij: yes
+configure_intellij: no
 
 dotfiles_repo: https://github.com/dhergert/dotfiles.git
 dotfiles_repo_accept_hostkey: yes
