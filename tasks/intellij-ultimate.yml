@@ -1,0 +1,4 @@
+
+---
+- name: Install Intellij IDEA Ultimate
+  homebrew_cask: name=intellij-idea

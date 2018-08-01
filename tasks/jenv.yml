@@ -1,0 +1,21 @@
+# Copied this from ansible-role-osx-jenv - https://travis-ci.org/lafarer/ansible-role-osx-jenv
+---
+- name: "Update bash profile with jenv"
+  lineinfile: state=present create=yes dest='~/.bash_profile' line='if which jenv > /dev/null; then eval "$(jenv init -)"; fi'
+
+- name: "Get available JDKs for jenv"
+  shell: "ls /Library/Java/JavaVirtualMachines/"
+  register: jvms
+  ignore_errors: yes
+  changed_when: False
+
+- name: "Register JDKs with jenv"
+  shell: "jenv add /Library/Java/JavaVirtualMachines/{{ item }}/Contents/Home || true"
+  with_items: "{{ jvms.stdout_lines }}"
+  ignore_errors: yes
+  register: result
+  changed_when: "'already' not in result.stdout"
+
+- name: "Installs jenv shims for all JDKs"
+  shell: "jenv rehash"
+  changed_when: False

@@ -1,0 +1,39 @@
+
+---
+- name: Apache Directory Studio Facts
+  set_fact:
+    vm_flag: "-vm"
+    vm_path: "/Users/dhergert/.jenv/versions/1.8/bin/java"
+
+- name: Install Apache Directory Studio
+  homebrew_cask:
+    name: apache-directory-studio
+  state: present
+
+#   /Applications/Apache\ Directory\ Studio.app/Contents/Resources/Java/configuration/config.ini
+# - name: Configure Java Version
+#   lineinfile:
+#       dest: "/Applications/Apache Directory Studio.app/Contents/Resources/Java/configuration/eclipse.ini"
+#       line: "-vm\n/Users/dhergert/.jenv/versions/1.8/bin/java"
+#       insertafter: "EOF"
+
+# Retrieve and display the number of nodes
+- name: Get count of JVM args
+  xml:
+    path: "/Applications/ApacheDirectoryStudio.app/Contents/Info.plist"
+    xpath: /plist/dict/key[text()="Eclipse"]/following-sibling::array/string[text()="{{ vm_flag }}"]
+    count: yes
+  register: vm_already_set
+
+- debug:
+    var: vm_already_set
+
+- name: Configure Java Version
+  xml:
+    path: "/Applications/ApacheDirectoryStudio.app/Contents/Info.plist"
+    xpath: /plist/dict/key[text()="Eclipse"]/following-sibling::array
+    add_children:
+    - string: "{{ vm_flag }}"
+    - string: "{{ vm_path }}"
+  when:
+    vm_already_set.count == 0

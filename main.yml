@@ -22,23 +22,40 @@
       tags: ['mas']
 
   tasks:
-    - include: tasks/ansible-setup.yml
+    - include_tasks: tasks/ansible-setup.yml
 
-    - include: tasks/sudoers.yml
+    - include_tasks: tasks/sudoers.yml
       when: configure_sudoers
 
-    - include: tasks/terminal.yml
+    - include_tasks: tasks/terminal.yml
       when: configure_terminal
 
-    - include: tasks/osx.yml
+    - include_tasks: tasks/osx.yml
       when: configure_osx
       tags: ['osx']
 
-    - include: tasks/extra-packages.yml
+    - include_tasks: tasks/jenv.yml
+      when: configure_jenv
+      tags: ['jenv']
+
+    - include_tasks: tasks/extra-packages.yml
+      when: configure_extra_packages
       tags: ['extra-packages']
 
     - name: Run configured post-provision ansible task files.
-      include: "{{ outer_item }}"
+      include_tasks: "{{ outer_item }}"
       loop_control:
         loop_var: outer_item
       with_fileglob: "{{ post_provision_tasks|default(omit) }}"
+
+    - include_tasks: tasks/eclipse.yml
+      when: configure_eclipse
+      tags: ['eclipse']
+
+    - include_tasks: tasks/intellij-ultimate.yml
+      when: configure_intellij
+      tags: ['intellij']
+
+    - include_tasks: tasks/apachedirectorystudio.yml
+      when: configure_apachedirectorystudio
+      tags: ['apachedirectorystudio']

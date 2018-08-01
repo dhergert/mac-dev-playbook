@@ -1,0 +1,58 @@
+
+---
+- name: Install Eclipse
+  homebrew_cask: name=eclipse-java
+
+- name: Set Eclipse Facts
+  set_fact:
+    eclipse_folder: "/Applications/Eclipse Java.app"
+
+- name: Set more facts
+  set_fact:
+    eclipse_home: "{{ eclipse_folder }}/Contents/Eclipse"
+    eclipse: "{{ eclipse_folder }}/Contents/MacOS/eclipse"
+
+- debug: var=eclipse_home
+- debug: var=eclipse
+
+- name: Link Eclipse
+  file:
+    src: "{{ eclipse }}"
+    dest: "/usr/local/bin/eclipse"
+    state: link
+
+- name: Eclipse Clean Up
+  file: path="{{ item }}"
+  state: absent
+  with_fileglob:
+    - "{{ eclipse_home }}/plugins/org.eclipse.jpt.*"
+    - "{{ eclipse_home }}/features/org.eclipse.jpt.*"
+    - "{{ eclipse_home }}/plugins/*jgit*"
+    - "{{ eclipse_home }}/features/*jgit*"
+    - "{{ eclipse_home }}/plugins/*egit*"
+    - "{{ eclipse_home }}/features/*egit*"
+
+- name: Configure Eclipse Parameters
+  lineinfile:
+      dest: "{{ eclipse_home }}/eclipse.ini"
+      line: "-Xverify:none"
+
+- name: Configure Eclipse Parameters
+  lineinfile:
+      dest: "{{ eclipse_home }}/eclipse.ini"
+      line: "-clean"
+      insertbefore: "-startup"
+
+- name: Configure MaxPermSize
+  lineinfile:
+      dest: "{{ eclipse_home }}/eclipse.ini"
+      line: "-XX:MaxPermSize=512m"
+      insertafter: "Xmx"
+
+- name: Eclipse features
+  shell: eclipse -application org.eclipse.equinox.p2.director -noSplash -repository {{ item.repo }} -installIUs {{ item.feature }}
+  with_items:
+    - { repo: 'http://download.eclipse.org/technology/m2e/releases/', feature: 'org.eclipse.m2e.feature.feature.group'}
+    - { repo: 'http://velo.github.io/maven-formatter-plugin/p2/1.5.0', feature: 'com.marvinformatics.formatter.feature.feature.group'}
+    - { repo: 'http://repo1.maven.org/maven2/.m2e/connectors/m2eclipse-buildhelper/0.15.0/N/0.15.0.201405280027/', feature: 'org.sonatype.m2e.buildhelper.feature.feature.group'}
+    - { repo: 'https://raw.githubusercontent.com/wakatime/eclipse-wakatime/master/update-site/', feature: 'com.wakatime.eclipse.feature.feature.group'}

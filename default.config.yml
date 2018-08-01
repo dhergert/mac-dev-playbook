@@ -1,14 +1,20 @@
 ---
 downloads: ~/.ansible-downloads/
 
-configure_dotfiles: yes
-configure_sudoers: yes
-configure_terminal: yes
-configure_osx: yes
+configure_dotfiles: no
+configure_sudoers: no
+configure_terminal: no
+configure_osx: no
+configure_extra_packages: no
+configure_jenv: no
+configure_eclipse: no
+configure_apachedirectorystudio: no
+configure_intellij: yes
 
-dotfiles_repo: https://github.com/geerlingguy/dotfiles.git
+dotfiles_repo: https://github.com/dhergert/dotfiles.git
 dotfiles_repo_accept_hostkey: yes
-dotfiles_repo_local_destination: ~/Dropbox/Development/GitHub/dotfiles
+dotfiles_repo_local_destination: ~/projects/dotfiles
+
 dotfiles_files:
   - .bash_profile
   - .gitignore
@@ -18,8 +24,12 @@ dotfiles_files:
 
 homebrew_installed_packages:
   # - ansible # Installed via Pip.
+  - adoptopenjdk-openjdk8
+  - adoptopenjdk-openjdk9
+  - adoptopenjdk-openjdk10
   - autoconf
   - bash-completion
+  - { name: "curl", install_options: "with-libssh2" }
   - chromedriver
   - doxygen
   - gettext
@@ -30,49 +40,72 @@ homebrew_installed_packages:
   - hub
   - httpie
   - iperf
+  - jenv
+  - kubectl
   - libevent
   - sqlite
   - mcrypt
+  - maven
+  - mysql
   - nmap
   - node
   - nvm
+  - openshift-cli
+  - python
   - ssh-copy-id
-  - cowsay
+  - tree
   - readline
   - openssl
   - pv
   - wget
   - wrk
 
+homebrew_uninstalled_packages:
+  - cowsay
+
 homebrew_taps:
   - homebrew/core
   - caskroom/cask
   - homebrew/php
+  - atlassian/tap
+  - AdoptOpenJDK/openjdk
 
 homebrew_cask_appdir: /Applications
 homebrew_cask_apps:
+  - dbeaver-community
   - docker
   - dropbox
   # - fing # Download link keeps getting changed, d'oh!
   - firefox
   - google-chrome
-  - handbrake
+  - java
+  - java8
+  #- handbrake
   - licecap
-  - limechat
+#  - limechat
   - macvim
   - nvalt
   - sequel-pro
   - skitch
   - slack
-  - sublime-text
+#  - sublime-text
   - transmit
   - vagrant
   - virtualbox
 
 # See `geerlingguy.mas` role documentation for usage instructions.
-mas_installed_apps: []
-mas_email: ""
-mas_password: ""
+mas_installed_apps:
+    - { id: 497799835, name: "Xcode (9.0)" }
+#mas_email
+#mas_password
+vars_prompt:
+  - name: "mas_email"
+    prompt: "MAS Email"
+    private: no
+
+  - name: "mas_password"
+    prompt: "MAS Password"
+    private: yes
 
 osx_script: "~/.osx --no-restart"
 
@@ -91,7 +124,7 @@ npm_packages: []
   # - name: webpack
   #   state: present # present/absent/latest, default: present
   #   version: "^2.6" # default: N/A
-pip_packages: []
+pip_packages: ["lxml"]
   # - name: mkdocs
   #   state: present # present/absent/latest, default: present
   #   version: "0.16.3" # default: N/A
