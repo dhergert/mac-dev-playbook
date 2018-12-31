@@ -8,7 +8,7 @@
   pre_tasks:
     - include_vars: "{{ item }}"
       with_fileglob:
-        - ../config.yml
+        - "{{ playbook_dir }}/config.yml"
       tags: ['always']
 
   roles:
@@ -30,20 +30,27 @@
     - include_tasks: tasks/terminal.yml
       when: configure_terminal
 
+<<<<<<< HEAD
     - include_tasks: tasks/iterm2.yml
       when: configure_iterm2
       tags: ['iterm2']
 
+=======
+>>>>>>> upstream/master
     - include_tasks: tasks/osx.yml
       when: configure_osx
       tags: ['osx']
 
+<<<<<<< HEAD
     - include_tasks: tasks/jenv.yml
       when: configure_jenv
       tags: ['jenv']
 
     - include_tasks: tasks/extra-packages.yml
       when: configure_extra_packages
+=======
+    - include_tasks: tasks/extra-packages.yml
+>>>>>>> upstream/master
       tags: ['extra-packages']
 
     - name: Run configured post-provision ansible task files.

@@ -39,25 +39,25 @@ You can override any of the defaults configured in `default.config.yml` by creat
       - cowsay
       - git
       - go
-
+    
     mas_installed_apps:
       - { id: 443987910, name: "1Password" }
       - { id: 498486288, name: "Quick Resizer" }
       - { id: 557168941, name: "Tweetbot" }
       - { id: 497799835, name: "Xcode" }
-
+    
     composer_packages:
       - name: hirak/prestissimo
       - name: drush/drush
         version: '^8.1'
-
+    
     gem_packages:
       - name: bundler
         state: latest
-
+    
     npm_packages:
       - name: webpack
-
+    
     pip_packages:
       - name: mkdocs
 
@@ -67,9 +67,9 @@ Any variable can be overridden in `config.yml`; see the supporting roles' docume
 
 Applications (installed with Homebrew Cask):
 
+  - [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/)
   - [Docker](https://www.docker.com/)
   - [Dropbox](https://www.dropbox.com/)
-  - [Fing](https://www.fing.io/)
   - [Firefox](https://www.mozilla.org/en-US/firefox/new/)
   - [Google Chrome](https://www.google.com/chrome/)
   - [Handbrake](https://handbrake.fr/)
@@ -84,15 +84,14 @@ Applications (installed with Homebrew Cask):
   - [Sublime Text](https://www.sublimetext.com/)
   - [Transmit](https://panic.com/transmit/) (S/FTP client)
   - [Vagrant](https://www.vagrantup.com/)
-  - [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 
 Packages (installed with Homebrew):
 
   - autoconf
   - bash-completion
-  - chromedriver
   - doxygen
   - gettext
+  - gifsicle
   - git
   - go
   - gpg
@@ -102,8 +101,10 @@ Packages (installed with Homebrew):
   - libevent
   - sqlite
   - mcrypt
-  - npm
+  - nmap
+  - node
   - nvm
+  - php
   - ssh-copy-id
   - cowsay
   - readline
@@ -161,4 +162,4 @@ Check out [Ansible for DevOps](https://www.ansiblefordevops.com/), which teaches
 
 ## Author
 
-[Jeff Geerling](http://www.jeffgeerling.com/), 2014 (originally inspired by [MWGriffin/ansible-playbooks](https://github.com/MWGriffin/ansible-playbooks)).
+[Jeff Geerling](https://www.jeffgeerling.com/), 2014 (originally inspired by [MWGriffin/ansible-playbooks](https://github.com/MWGriffin/ansible-playbooks)).
