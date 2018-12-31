@@ -25,9 +25,6 @@ dotfiles_files:
 
 homebrew_installed_packages:
   # - ansible # Installed via Pip.
-  - adoptopenjdk-openjdk8
-  - adoptopenjdk-openjdk9
-  - adoptopenjdk-openjdk10
   - autoconf
   - bash-completion
   - { name: "curl", install_options: "with-libssh2" }
@@ -60,6 +57,7 @@ homebrew_installed_packages:
   - pv
   - wget
   - wrk
+  - yamllint
 
 homebrew_uninstalled_packages:
   - cowsay
@@ -69,10 +67,12 @@ homebrew_taps:
   - caskroom/cask
   - homebrew/php
   - atlassian/tap
-  - AdoptOpenJDK/openjdk
 
 homebrew_cask_appdir: /Applications
 homebrew_cask_apps:
+  - adoptopenjdk8  # https://github.com/AdoptOpenJDK/homebrew-openjdk
+  - adoptopenjdk9
+  - adoptopenjdk10
   - dbeaver-community
   - docker
   - dropbox
